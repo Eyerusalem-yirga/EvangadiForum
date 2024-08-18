@@ -7,11 +7,12 @@ async function getAllQuestion(req, res) {
     const [questions] = await dbConnection.query(`
       SELECT 
         q.*,
-        (SELECT username FROM users WHERE userid = q.userid) AS username
+        (SELECT user_name FROM users WHERE user_id = q.user_id) AS username
       FROM questions q
     `);
     return res.json(questions);
   } catch (error) {
+    console.log("1");
     console.error(error.message);
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -43,12 +44,13 @@ async function askQuestion(req, res) {
 
     // Insert new question into the database
     const created = await dbConnection.query(
-      "INSERT INTO questions (title, description, user_id, tag, questionid) VALUES (?, ?, ?, ?, ?)",
-      [title, description, user_id, tag, questionId]
+      "INSERT INTO questions (title, description, user_id, tag, question_id) VALUES (?, ?, ?, ?, ?)",
+      [title, description, userid, tag, questionId]
     );
 
     return res.status(StatusCodes.CREATED).json({ msg: "successfull" });
   } catch (error) {
+    console.log("2");
     console.error(error.message);
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -66,7 +68,7 @@ async function searchQuestions(req, res) {
   try {
     const [questions] = await dbConnection.query(
       `
-    SELECT *, (SELECT username FROM users WHERE userid = q.userid) AS username
+    SELECT *, (SELECT user_name FROM users WHERE user_id = q.user_id) AS username
 FROM questions q
 WHERE title LIKE ? OR tag LIKE ?
 

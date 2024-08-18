@@ -22,8 +22,8 @@ function AddQuestion() {
     const title = titleDoc.current.value;
     const description = descriptionDoc.current.value;
     const tag = selectedValue;
-    const userid = user.userid;
-    // console.log(userid);
+    const userid = user["user_id"];
+
     console.log(title, description, tag);
     if (!title || !description) {
       setErrorMessage("Please provide all required information");

@@ -5,6 +5,8 @@ import Auth from "./pages/auth/Auth";
 import Home from "./pages/home/Home";
 import Answer from "./pages/answer/Answer";
 import AddQuestion from "./pages/question/AddQuestion";
+import Login from "./components/login/Login";
+import Register from "./components/register/Register";
 
 export const appState = createContext();
 
@@ -15,34 +17,41 @@ function App() {
   const navigate = useNavigate();
 
   async function checkUser() {
-    console.log(":::::");
     if (token) {
+      console.log("Token found");
       try {
         const { data } = await axios.get("/users/check", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log("###");
         setUser(data);
+        console.log(data.user);
+
         setIslogedin(true);
       } catch (error) {
         console.log(error.response);
-        navigate("/");
+        console.log("error in app js, 1");
+        // navigate("/");
       }
     } else {
+      console.log("no token");
       navigate("/");
     }
   }
 
   useEffect(() => {
     checkUser();
-  }, []);
+  }, [token]);
 
   return (
     <appState.Provider value={{ user, setUser, islogedin, setIslogedin }}>
       <Routes>
         <Route path="/" element={<Auth />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/home/answer/:id" element={<Answer />} />
         <Route path="/home/question" element={<AddQuestion />} />
       </Routes>

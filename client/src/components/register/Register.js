@@ -45,8 +45,8 @@ function Register({ dispatch }) {
       });
       // alert("The user already registered");
 
-      //   navigate("/home");
-      navigate("/");
+      navigate("/login");
+      // navigate("/");
     } catch (error) {
       if (error.response) {
         // The request was made and the server responded with a status code

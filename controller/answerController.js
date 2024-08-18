@@ -12,13 +12,13 @@ async function getAllanswers(req, res) {
     const answers = await dbConnection.query(
       `SELECT 
     a.*,
-    (SELECT username FROM users WHERE userid = a.userid) AS username,
-    (SELECT title FROM questions WHERE questionid =  a.questionid ) AS title,
-    (SELECT description  FROM questions WHERE questionid =  a.questionid ) AS description
+    (SELECT user_name FROM users WHERE user_id = a.user_id) AS user_name,
+    (SELECT title FROM questions WHERE question_id =  a.question_id ) AS title,
+    (SELECT description  FROM questions WHERE question_id =  a.question_id ) AS description
   FROM 
     answers a 
   WHERE 
-    a.questionid = ?`,
+    a.question_id = ?`,
       [questionId]
     );
     if (answers[0].length > 0) {
@@ -27,7 +27,7 @@ async function getAllanswers(req, res) {
     const resp = await dbConnection.query(
       `SELECT title, description
 FROM questions
-WHERE questionid = ?`,
+WHERE question_id = ?`,
       [questionId]
     );
     return res.json(resp[0]);
@@ -39,24 +39,26 @@ WHERE questionid = ?`,
   }
 }
 async function giveAnswers(req, res) {
-  const { userid, answer, questionid } = req.body;
+  console.log(req.body);
+  const { answer, id: questionid, userid } = req.body;
+  console.log(answer, questionid, userid);
   if (!userid || !answer || !questionid) {
     return res
       .status(StatusCodes.BAD_REQUEST)
       .json({ msg: "Please provide all required information" });
   }
   const [questioner] = await dbConnection.query(
-    "SELECT userid FROM questions WHERE questionid = ? ",
+    "SELECT user_id FROM questions WHERE question_id = ? ",
     [questionid]
   );
   //   console.log(userid);
-  if (questioner[0].userid == userid) {
+  if (questioner[0].user_id == userid) {
     return res
       .status(StatusCodes.BAD_REQUEST)
       .json({ msg: "you ask the question" });
   }
   const created = await dbConnection.query(
-    "INSERT INTO answers (userid, answer,  questionid) VALUES (?, ?, ?)",
+    "INSERT INTO answers (user_id, answer,  question_id) VALUES (?, ?, ?)",
     [userid, answer, questionid]
   );
   return res.status(StatusCodes.CREATED).json({ msg: "successfull" });

@@ -30,15 +30,15 @@ function Home() {
     }
   };
 
-  console.log(`uuu: ${user.username}`);
+  console.log(`home: ${user}`);
   useEffect(() => {
     // Set username only when user is available
-    if (user && user.username) {
-      setUsername(user.username);
+    if (user) {
+      console.log("$$$");
+      console.log(user);
+      setUsername(user.user);
     }
-    console.log(user);
   }, [user]); // Add user as dependency to useEffect
-  console.log(username);
   return (
     <LayOut>
       <section>

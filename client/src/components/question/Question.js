@@ -49,35 +49,39 @@ function Question({ searchResults }) {
       [questionId]: !prevState[questionId],
     }));
   };
-
+  // questions.map((question) => {
+  //   console.log(question);
+  //   console.log(question.question_id);
+  // });
+  // console.log(questions[0]);
   return (
     <>
       {questions &&
         questions.map((question) => (
-          <div className="border-b-2" key={question.questionid}>
+          <div className="border-b-2" key={question.question_id}>
             <div className="flex gap-6">
               <div>
                 <div className="w-24">
                   <img src={profile} alt="" />
                 </div>
-                <h2 className="text-center">{question.username}</h2>
+                <h2 className="text-center">qqqq{question.username}</h2>
               </div>
               <div className="flex w-11/12 justify-between items-center">
-                <Link to={`./answer/${question.questionid}`}>
+                <Link to={`./answer/${question.question_id}`}>
                   <p>{question.title}</p>
                 </Link>
-                {showDescription[question.questionid] ? (
+                {showDescription[question.id] ? (
                   <FaAngleDown
-                    onClick={() => handleDropDown(question.questionid)}
+                    onClick={() => handleDropDown(question.question_id)}
                   />
                 ) : (
                   <IoIosArrowForward
-                    onClick={() => handleDropDown(question.questionid)}
+                    onClick={() => handleDropDown(question.question_id)}
                   />
                 )}
               </div>
             </div>
-            {showDescription[question.questionid] && (
+            {showDescription[question.question_id] && (
               <div className="p-6">
                 <p>
                   Description: - <span>{question.description}</span>

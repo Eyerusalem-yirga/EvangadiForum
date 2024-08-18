@@ -8,14 +8,15 @@ import { useParams } from "react-router-dom";
 import { appState } from "../../App";
 
 function Answer() {
+  const token = localStorage.getItem("token");
+
   const [answers, SetAnswers] = useState([]);
   const [questionid, setQuestionid] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
-  console.log(questionid);
   const { user } = useContext(appState);
-  const userid = user.userid;
+  const userid = user["user_id"];
   // console.log(userid);
   const { id } = useParams();
 
@@ -27,17 +28,26 @@ function Answer() {
       setErrorMessage("Please provide all required information");
       return;
     }
+    console.log(answer, id, userid);
     try {
-      const response = await axios.post("/answers/give-answers", {
-        answer,
-        questionid: id,
-        userid,
-      });
+      const response = await axios.post(
+        "/answers/give-answers",
+        {
+          answer,
+          id,
+          userid,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
       setSuccessMessage("posted successful");
       getAllAnswers();
     } catch (error) {
       setErrorMessage(error.response.data.msg);
-      console.log(error.response.data.msg);
+      console.log("error in api request in frontend");
     }
   };
   useEffect(() => {
@@ -47,7 +57,11 @@ function Answer() {
 
   async function getAllAnswers() {
     try {
-      const response = await axios.get(`/answers/${id}`);
+      const response = await axios.get(`/answers/${id}`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
       if (response.data && response.data.length > 0) {
         // Check if response.data is not empty
         SetAnswers(response.data);

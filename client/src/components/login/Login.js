@@ -38,8 +38,10 @@ function Login({ dispatch }) {
         password: passValue,
       });
       setSuccessMessage("Login Successful");
-      navigate("/home");
       localStorage.setItem("token", data.token);
+      localStorage.setItem("user_name", data.username);
+
+      navigate("/home");
     } catch (error) {
       // console.log(emailValue, passValue);
 

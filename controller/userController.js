@@ -51,7 +51,7 @@ async function login(req, res) {
   console.log("login initiated");
   const { email, password } = req.body;
 
-  console.log("Login Request Body:", req.body);
+  // console.log("Login Request Body:", req.body);
 
   if (!email || !password) {
     return res
@@ -64,10 +64,9 @@ async function login(req, res) {
       "SELECT user_name, user_id, pass FROM users WHERE user_email = ?",
       [email]
     );
-    console.log(user.length);
 
     if (user.length === 0) {
-      console.log("no user");
+      // console.log("no user");
       return res
         .status(StatusCodes.BAD_REQUEST)
         .json({ msg: "Invalid credentials" });
@@ -82,8 +81,8 @@ async function login(req, res) {
     }
 
     console.log("User fetched from DB:", user[0]);
-    const username = user[0].username;
-    const userid = user[0].userid;
+    const username = user[0].user_name;
+    const userid = user[0].user_id;
     const secret = process.env.JWT_SECRET;
 
     if (!secret) {
@@ -107,10 +106,13 @@ async function login(req, res) {
 }
 
 async function checkuser(req, res) {
+  // console.log("user checked");
   const username = req.user.username;
   const userid = req.user.userid;
 
-  res.status(StatusCodes.OK).json({ msg: "valid user ", username, userid });
+  res
+    .status(StatusCodes.OK)
+    .json({ msg: "valid user ", user: username, user_id: userid });
 }
 
 module.exports = { register, login, checkuser };

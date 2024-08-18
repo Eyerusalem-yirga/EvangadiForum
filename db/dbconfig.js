@@ -56,16 +56,20 @@ connection.connect((err) => {
   console.log("Connected to the database!");
 
   // Query to select all rows from the 'test' table
-  //   const query = "select * from test";
-  const query = `
-    question_id INT AUTO_INCREMENT PRIMARY KEY,
-    title TEXT NOT NULL,
-    description TEXT,
-    user_id INT,
-    post_id VARCHAR(255) UNIQUE,
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
-  );
-        `;
+  const query = "select * from test";
+  // const query = "drop table questions";
+  //   const query = `
+  //      CREATE TABLE answers (
+  //     answer_id INT(20) NOT NULL AUTO_INCREMENT,
+  //     user_id INT(20) NOT NULL,
+  //     question_id VARCHAR(100) NOT NULL,
+  //     answer VARCHAR(200) NOT NULL,
+  //     PRIMARY KEY(answer_id),
+  //     FOREIGN KEY(question_id) REFERENCES questions(question_id),
+  //     FOREIGN KEY(user_id) REFERENCES users(user_id)
+  // );
+
+  // `;
 
   // Execute the query
   connection.query(query, (err, results) => {
