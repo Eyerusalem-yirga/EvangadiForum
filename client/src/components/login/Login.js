@@ -43,12 +43,13 @@ function Login({ dispatch }) {
 
       navigate("/home");
     } catch (error) {
-      // console.log(emailValue, passValue);
+      console.log(emailValue, passValue);
 
       // alert(error?.response?.data?.message);
       // console.log(error);
       // alert(error);
       alert("no user found with this credential, please sign up first!");
+      console.log(error);
     }
   };
 

@@ -49,11 +49,7 @@ function Question({ searchResults }) {
       [questionId]: !prevState[questionId],
     }));
   };
-  // questions.map((question) => {
-  //   console.log(question);
-  //   console.log(question.question_id);
-  // });
-  // console.log(questions[0]);
+
   return (
     <>
       {questions &&

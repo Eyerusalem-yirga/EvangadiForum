@@ -28,7 +28,6 @@ function Answer() {
       setErrorMessage("Please provide all required information");
       return;
     }
-    console.log(answer, id, userid);
     try {
       const response = await axios.post(
         "/answers/give-answers",
@@ -90,9 +89,9 @@ function Answer() {
           </div>
           {answers.length > 1 && (
             <>
-              {answers.map((answer) => {
+              {answers.map((answer, index) => {
                 return (
-                  <div className="flex gap-6 ">
+                  <div className="flex gap-6" key={index}>
                     <div>
                       <div className="w-24">
                         <img src={profile} alt="" />

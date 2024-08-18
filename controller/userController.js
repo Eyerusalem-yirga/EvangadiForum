@@ -66,7 +66,7 @@ async function login(req, res) {
     );
 
     if (user.length === 0) {
-      // console.log("no user");
+      console.log("no user");
       return res
         .status(StatusCodes.BAD_REQUEST)
         .json({ msg: "Invalid credentials" });

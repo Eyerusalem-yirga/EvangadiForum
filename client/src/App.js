@@ -18,16 +18,14 @@ function App() {
 
   async function checkUser() {
     if (token) {
-      console.log("Token found");
+      // console.log("Token found");
       try {
         const { data } = await axios.get("/users/check", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log("###");
         setUser(data);
-        console.log(data.user);
 
         setIslogedin(true);
       } catch (error) {

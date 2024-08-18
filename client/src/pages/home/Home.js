@@ -24,18 +24,14 @@ function Home() {
         },
       });
       setSearchResults(data);
-      console.log(data);
     } catch (error) {
       console.error("Error fetching search results:", error);
     }
   };
 
-  console.log(`home: ${user}`);
   useEffect(() => {
     // Set username only when user is available
     if (user) {
-      console.log("$$$");
-      console.log(user);
       setUsername(user.user);
     }
   }, [user]); // Add user as dependency to useEffect
