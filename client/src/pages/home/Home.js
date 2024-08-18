@@ -38,22 +38,17 @@ function Home() {
   return (
     <LayOut>
       <section>
-        <div className="w-3/4 mx-auto">
-          <div className="flex justify-between mt-11">
+        <div className="w-3/4 mx-auto ">
+          <h2 className="font-medium text-lg text-center m-3">
+            welcome, {username}.
+          </h2>
+          <div className="flex justify-between">
             <Link
               to={"/home/question"}
               className="bg-blue-600 py-1 text-white px-14 rounded-sm"
             >
               Ask Question
             </Link>
-            <h2 className="font-medium text-lg">welcome: {username}</h2>
-          </div>
-          <div className="flex justify-between">
-            <div className="mt-9">
-              <h2 className="font-medium text-lg pb-6 border-b-2 ">
-                Questions
-              </h2>
-            </div>
             <form onSubmit={handleSearch}>
               <input
                 type="text"
@@ -65,6 +60,13 @@ function Home() {
                 <IoSearch />
               </button>
             </form>
+          </div>
+          <div className="flex justify-center align-center">
+            <div className=" m-3 ">
+              <h2 className="font-medium text-lg  border-b-2 text-center">
+                Questions
+              </h2>
+            </div>
           </div>
 
           <Question searchResults={searchResults} />
