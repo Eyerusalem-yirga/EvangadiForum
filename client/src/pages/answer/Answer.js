@@ -61,7 +61,9 @@ function Answer() {
           Authorization: "Bearer " + token,
         },
       });
+      console.log(response.data);
       if (response.data && response.data.length > 0) {
+        console.log("--");
         // Check if response.data is not empty
         SetAnswers(response.data);
       }
